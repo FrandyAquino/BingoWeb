@@ -47,7 +47,7 @@ function App() {
         <h1>Bingo</h1>
         <div className="container">
           {arrayBingo.map((item, index) => (
-            <p key={index}>{item}</p>
+            <div className='grid-item' key={index}>{item}</div>
           ))}
         </div>
         <button onClick={(() => generateTable())}>Limpiar tablero</button>
