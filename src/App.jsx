@@ -4,6 +4,7 @@ import './App.css'
 function App() {
   const [arrayBingo, setArrayBingo] = useState([])
   const [ficha, setFicha] = useState([])
+  const [fichaEncontrada, setFichaEncontrada] = useState([])
   const bingo = ["B", "I", "N", "G", "O"]
 
 
@@ -15,7 +16,11 @@ function App() {
     }
 
     for (let i = 0; i < 25; i++) {
-      let numberRandom = Math.floor((Math.random() * 75) + 1);
+      let numberRandom = Math.floor((Math.randomñ() * 75) + 1);
+      if (arrayBingo.includes(numberRandom)) {
+        i--
+        continue
+      }
       arrayBingo.push(numberRandom)
     }
     setArrayBingo(arrayBingo)
@@ -34,9 +39,11 @@ function App() {
   }
 
   function handleFindFicha(e) {
-    arrayBingo.filter((item) => {
-      if (item === e.target.innerText) {
-        console.log("Ficha encontrada")
+    let valor = parseInt(e.target.innerText)
+    arrayBingo.find((item) => {
+      if (item === valor) {
+        console.log(`Ficha encontrada: ${valor}`)
+        setFichaEncontrada([...fichaEncontrada, valor])
       }
     })
   }
@@ -47,7 +54,10 @@ function App() {
         <h1>Bingo</h1>
         <div className="container">
           {arrayBingo.map((item, index) => (
-            <div className='grid-item' key={index}>{item}</div>
+            <div 
+            className='grid-item' 
+            key={index} 
+            style={{backgroundColor: fichaEncontrada.includes(item) ? 'green' : '#f0f0f0'}}>{item}</div>
           ))}
         </div>
         <button onClick={(() => generateTable())}>Limpiar tablero</button>
